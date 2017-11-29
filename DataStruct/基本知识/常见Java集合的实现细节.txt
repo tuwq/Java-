@@ -1,0 +1,106 @@
+第三章 常见Java集合的实现细节
+总结:
+	1)本章并没有介绍关于Java集合用法的知识，而主要分析了Java集合的底层实现细节
+	2)从底层分别介绍了HashMap和Hash存储机制、TreeMap的红黑树存储机制
+	3)并指出HashSet的底层就是HashMap、TreeSet的底层就是TreeMap
+	4)也分析了Map和List之间的联系，List可以看作是所有Key都是int值的Map
+	5)ArrayList和LinkedList分别代表线性表的顺序实现和链表实现
+	6)因此程序应该根据不同的场景选择不同的实现类，以此提高运行效率
+	7)Iterator的实现细节，Iterator接口有很多实现类，不同集合类会为之提供不同的实现类
+	8)应用程序面向Iterator接口就可以迭代器不同的集合，如List、Set等
+	9)List、Set在实现Iterator时存在一定的差异，因此导致了List、Set在迭代同时删除元素时会有不同表现
+1.Set和Map
+	1)Set代表一种集合元素无序，不可重复的集合
+	2)Map则代表一种由多个key-value对组成的集合
+	3)Map集合类似于传统的关联数组，从表面上，它们之间的相似性很少
+	4)实际上，Map和Set之间有莫大的联系，Map集合是Set的扩张
+	5)Map集合的所有Key将具有Set集合的特征
+		(1)只要把Map的所有Key集中起来看，那它就是一个Set
+		(2)对于Map而言，相当于每个元素都是key-value对的Set集合
+	6)为了把Set扩展成Map，可以考虑新定义一个SimpleEntry类
+		(1)该类代表一个key-value对
+		(2)当Set集合的集合元素都是SimpleEntry对象时Set集合就能当成Map使用
+		(3)参见Set2Map<K,V>
+		(4)只要对传统的Set稍做改造，就可以将Set改造成Map集合，而且这个Map集合在功能上,
+			几乎可以与系统提供的Map类媲美
+2.HashMap和HashSet
+	1)实际上，HashSet和HashMap之间有很多相似之处
+	2)对于HashSet而言，系统采用Hash算法决定集合元素的存储位置
+	3)这样可以保证快速存、取集合元素
+	4)对于HashMap而言，系统将value当成key的"附属物"
+	5)系统根据Hash算法来决定key的存储位置
+	6)这样可以保证快速存、取集合key，而value总是紧随key存储
+	7)虽然集合号称存储的是Java对象，但实际上并不会真正将Java对象放入集合
+		而只是在集合中保留这些对象的引用而已，也就是说
+	8)Java集合实际上是多个引用变量所组成的集合，这些引用变量指向实际的Java对象
+	9)对于HashMap而言，它的存储方式要比ArrayList复杂一些
+		采用一种所谓的Hash算法来决定每个元素的存储位置
+		HashMap类的put(K key,V value)方法的源代码
+		参见MyHashMap
+	10)当创建HashMap时，有一个默认的负载因子，其默认值为0.75
+		(1)这是时间和空间成本上的一种折中:
+		(2)增大负载因子可以减少Hash表(就是那个Entry数组)所占用的内存空间，但增加查询时间
+		(3)减少负载因子会提供数据查询的性能，但会增加内存空间
+		(4)已空间换时间是目前普遍的认同观点
+3.TreeMap和TreeSet
+	1)HashSet底层依赖于HashMap实现，TreeSet底层则采用一个NavigableMap来保存TreeSet集合的元素
+		(1)实际上，由于NavigableMap只是一个接口，因此底层依然是使用TreeMap来包含Set集合中的所有元素
+	2)对于TreeMap而言是，由于它底层采用一棵红黑树来保存集合中的Entry，这意味着TreeMap添加元素
+		取出元素的性能都比HashMap低。
+	3)当TreeMap添加元素时，需要通过循环找到新增Entry的插入位置，因此比较耗性能
+	4)但TreeMap、TreeSet相比HashMap、HashMap的优势在于，TreeMap中的所有Entry总是按key根据指定的排定规则
+		保存有序状态，TreeSet中所有元素总是根据指定的排序规则保持有序状态
+	5)TreeMap本质上是一棵红黑树
+4.Map和List
+	1)Map集合是一个关联数组，它包含两组值:
+		(1)一组是所有key组成的集合，因为Map集合的key不允许重复
+			而且Map不会保存key加入的顺序，因此这些key可以组成一个Set集合
+		(2)另一组是value组成的集合，因为Map集合的value允许重复
+			而且Map可以根据key来获取对应的value，所以这些value可以组成一个List集合
+		(3)实际上，Map的value方法并未返回一个List集合
+	2)HashMap和TreeMap两个集合的values()方法返回值确实是包含Map中所有value集合，
+		(1)但它们并不是List对象，而分别是HashMap$Values对象和TreeMap$Values对象
+	3)这两个Map对象的values()方法返回的是一个不存储元素的Collection集合，当程序遍历Collection集合时
+		实际上就是遍历Map对象的value
+	4)HashMap和TreeMap的values方法并未把Map中的value重新组合成一个包含元素的集合对象，这样就可以降低系统内存开销
+5.Map和List的关系
+	1)Map和List在底层实现上并没有太大的相似之处，只是用法上存在一些相似之处
+	2)既可以说List相当于所以key都是int类型的Map，也可以说Map相当于索引是任意类型的List
+6.ArrayList和LinkedList
+	1)在LIst集合的实现类中，主要有三个实现类:
+	2)ArrayList、Vector和LinkedList
+	3)其中Vector还有一个Stack子类，这个Stack子类仅在Vector父类的基础上增加了五个方法，
+		这五个方法就将一个Vector扩展成Stack，本质上Stack依然是一个Vector，它只是比Vector多了五个方法
+	4)Stack类源码参见MyStack
+	5)Java不再推荐使用Stack类，而是推荐使用Deque实现类
+		(1)Java提供了一个Deque接口，并为该接口提供了一个ArrayDeque实现类
+		(2)在无须保证线程安全的情况下，程序完全可以使用ArrayDueue来代替Stack类
+		(3)Deque接口代表双端队列这种数据结构，它既具有队列性质，又有栈性质
+	6)ArrayList和ArrayDeque底层都是基于Java数组来实现的，只是它们所提供的方法不同而已
+	7)ArrayList和Vector差别在于是否同步(线程安全)
+7.ArrayList和LinkedList的实现差异
+	1)List代表一种线性表的数据结构
+		(1)ArrayList是一种顺序存储的线性表
+		(2)ArrayList底层采用数组来保存每个集合元素
+	2)LinkedList是一种链式存储的线性表
+		(1)LinkedList本质上就是一个双向链表，它不仅实现了List接口，还实现了Deque接口
+		(2)LinkedList既可以当成双向链表，也可以当成队列使用，还可以当成栈来使用
+	3)大部分情况下，ArrayList的性能总是优于LinkedList，因此绝大部分都应该考虑ArrayList集合
+		(1)ArrayList通过索引查询速度快，但添加删除时需要整体搬家
+		(2)LinkedList通过指引增加删除速度快，但查询需要逐个询问
+8.Iterator迭代器
+	1)对于Iterator迭代器而言，它只是一个接口
+		(1)Java要求各种集合都提供一个iterator方法，
+			该方法可以返回一个Iterator用于遍历该集合的元素
+		(2)至于返回的Iterator到底是哪种实现类，程序并不关心，
+			这就是典型的迭代器模式
+	2)对于Iterator遍历器而言，它判断是否还有下一个元素的标准
+		(1)如果下一步即将访问的元素的索引不等于集合的大小，就是返回true,否则返回false
+		(2)当程序使用Iterator遍历List集合的倒数第二个元素时，及下一步即将访问的元素的索引为size()-1
+		(3)如果此时通过List删除集合的任意一个元素，则将导致集合的size()变为size()-1
+		(4)这将导致hasNext()方法返回false,也就是说，遍历提前结束
+		(5)Iterator不会访问List集合的最后一个元素
+	3)也就是说，如果使用Iterator正在遍历List集合的倒数第二个元素，程序直接调用List集合的remove()方法
+		删除任意元素后，程序不会调用Iterator的next()方法访问集合的下一个元素，否则会引发ConcurrentModificationException异常
+	4)类似地，对于Set集合而言，如果当前正在遍历集合的最后一个元素，也就是集合遍历操作已经完成，
+		此时删除Set集合的任意元素都不会引发异常，实际上该删除动作已经在遍历操作范围之外了
