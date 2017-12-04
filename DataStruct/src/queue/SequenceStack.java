@@ -104,7 +104,7 @@ public class SequenceStack<T> {
 			return "[]";
 		}else{
 			StringBuilder sb=new StringBuilder("[");
-			for (int i=size-1;i>-1;i++) {
+			for (int i=size-1;i>-1;i--) {
 				sb.append(elementData[i].toString()+", ");
 			}
 			int len=sb.length();
