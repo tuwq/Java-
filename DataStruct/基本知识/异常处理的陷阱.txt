@@ -20,7 +20,7 @@
 			try语句会在该语句结束时自动关闭这些资源
 		(3)需要指出的是，为了保证try语句可以正常关闭资源，这些资源实现类必须实现
 			AutoCloseable或Closeable接口，实现这两个接口就必须实现close()方法
-		(4)参见AutoClose
+		(4)参见AutoClose实现
 		(5)自动关闭资源的try语句相当于包含了隐式的finally块(这个finally块用于关闭资源)
 			因此这个try语句可以既没有catch块，也没有finally块
 		(6)需要指出的是，使用自动关闭资源的try语句有两个注意点
@@ -30,7 +30,7 @@
 2.finally块的陷阱
 	1)finally的执行规则
 		(1)前面介绍说，finally块代表总是会被执行的代码块，但有一种情况例外
-		(2)参见ExitFinally
+		(2)参见ExitFinally实现
 		(3)无论try块是正常结束，还是中途非正常退出，finally块确实都会执行
 			然而在这个程序中，try语句块根本就没有结束其执行过程
 			System.exit(0)将停止当前线程和所有其他当场死亡的线程，
