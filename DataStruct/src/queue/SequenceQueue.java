@@ -2,6 +2,7 @@ package queue;
 
 import java.util.Arrays;
 
+//顺序队列
 public class SequenceQueue<T> {
 	
 	private int DEFAULT_SIZE=10;

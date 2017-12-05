@@ -3,6 +3,7 @@ package tree;
 import java.util.ArrayList;
 import java.util.List;
 
+//父节点表示法树
 public class TreeParent<E> {
 	
 	public static class Node<T>{

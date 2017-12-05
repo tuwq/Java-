@@ -2,6 +2,7 @@ package queue;
 
 import java.util.Arrays;
 
+//顺序栈
 public class SequenceStack<T> {
 	//保存数组的默认长度
 	private int DEFAULT_SIZE=10;

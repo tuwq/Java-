@@ -2,6 +2,7 @@ package Sequence;
 
 import java.util.Arrays;
 
+//顺序线性表
 public class SequenceList<T> {
 	//数组默认长度
 	private int DEFAULT_SIZE=16;

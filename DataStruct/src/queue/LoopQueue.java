@@ -2,6 +2,7 @@ package queue;
 
 import java.util.Arrays;
 
+//循环顺序队列
 public class LoopQueue<T> {
 	private int DEFAULT_SIZE=10;
 	//保存数组长度

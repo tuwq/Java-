@@ -1,5 +1,6 @@
 package queue;
 
+//链表队列
 public class LinkQueue<T> {
 	
 	//定义一个内部类节点

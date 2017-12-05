@@ -1,5 +1,6 @@
 package Sequence;
 
+//单链表
 public class LinkList<T> {
 	
 	//定义一个内部类Node、Node实例代表链表的节点

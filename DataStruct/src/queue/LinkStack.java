@@ -1,5 +1,6 @@
 package queue;
 
+//链表栈
 public class LinkStack<T> {
 	
 	//定义一个内部类Node,Node实例代表链栈的节点

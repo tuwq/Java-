@@ -3,6 +3,7 @@ package tree;
 import java.util.ArrayList;
 import java.util.List;
 
+//子节点表达法树
 public class TreeChild<E> {
 	
 	public static class SonNode{

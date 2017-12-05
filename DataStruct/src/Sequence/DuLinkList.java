@@ -1,5 +1,6 @@
 package Sequence;
 
+//双向链表
 public class DuLinkList<T> {
 	
 	//定义一个内部类Node,Node实例代表链表的节点
