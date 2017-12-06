@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+//哈夫曼树的实现
 public class HuffmanTree {
 	
 	public static class Node<E>{

@@ -13,5 +13,6 @@ public class SortedBinTreeTest {
 		System.out.println(tree.breadthFirst());
 		tree.remove(5);
 		System.out.println(tree.breadthFirst());
+		System.out.println(tree.centerIterator());
 	}
 }
